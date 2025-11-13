@@ -115,52 +115,6 @@ export default function Tentang() {
             </div>
           </div>
 
-          {/* Mission & Vision */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {/* Vision */}
-            <div className="group bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl p-8 text-white shadow-2xl hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-300 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
-              
-              <div className="relative">
-                <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <span className="material-icons text-4xl">visibility</span>
-                </div>
-                <h2 className="text-3xl font-bold mb-4">Visi Kami</h2>
-                <p className="text-white/90 text-lg leading-relaxed">
-                  Menjadi platform digital terdepan dalam memetakan dan mengembangkan UMKM di Tasikmalaya, 
-                  menciptakan ekosistem ekonomi lokal yang inklusif dan berkelanjutan.
-                </p>
-              </div>
-            </div>
-
-            {/* Mission */}
-            <div className="group bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700 shadow-2xl hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-300">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-green-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <span className="material-icons text-white text-4xl">flag</span>
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Misi Kami</h2>
-              <ul className="space-y-3 text-gray-600 dark:text-gray-400 text-lg">
-                <li className="flex items-start gap-3">
-                  <span className="material-icons text-green-500 mt-1">check_circle</span>
-                  <span>Memetakan seluruh UMKM di Tasikmalaya secara digital</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-icons text-green-500 mt-1">check_circle</span>
-                  <span>Memudahkan akses informasi UMKM bagi masyarakat</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-icons text-green-500 mt-1">check_circle</span>
-                  <span>Mendorong digitalisasi UMKM lokal</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-icons text-green-500 mt-1">check_circle</span>
-                  <span>Meningkatkan visibilitas produk lokal</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
           {/* Team */}
           <div className="mb-16">
             <div className="text-center mb-12">

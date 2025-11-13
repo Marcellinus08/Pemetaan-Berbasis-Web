@@ -40,38 +40,41 @@ export default function Kontak() {
 
   const contactInfo = [
     {
-      icon: 'location_on',
-      title: 'Alamat',
-      content: 'Jl. Sutisna Senjaya, Tasikmalaya, Jawa Barat 46116',
-      color: 'from-red-500 to-pink-500'
+      icon: 'public',
+      title: 'Platform',
+      content: 'Pemetaan UMKM Tasikmalaya',
+      color: 'from-emerald-500 to-green-500'
     },
     {
-      icon: 'mail',
-      title: 'Email',
-      content: 'info@umkmtasikmalaya.com',
-      link: 'mailto:info@umkmtasikmalaya.com',
+      icon: 'dataset',
+      title: 'Database',
+      content: 'Informasi UMKM di 9 kecamatan',
+      color: 'from-pink-500 to-rose-500'
+    },
+    {
+      icon: 'location_city',
+      title: 'Wilayah',
+      content: 'Tasikmalaya, Jawa Barat',
       color: 'from-blue-500 to-cyan-500'
     },
+{
+      icon: 'groups',
+      title: 'Komunitas',
+      content: 'Terbuka untuk seluruh masyarakat',
+      color: 'from-purple-500 to-pink-500'
+    },
     {
-      icon: 'phone',
-      title: 'Telepon',
-      content: '+62 812-3456-7890',
-      link: 'tel:+6281234567890',
+      icon: 'analytics',
+      title: 'Fitur',
+      content: 'Peta interaktif, statistik, dan informasi UMKM',
       color: 'from-green-500 to-emerald-500'
     },
     {
-      icon: 'schedule',
-      title: 'Jam Operasional',
-      content: 'Senin - Jumat: 08:00 - 17:00 WIB',
-      color: 'from-purple-500 to-indigo-500'
+      icon: 'diversity_3',
+      title: 'Tujuan',
+      content: 'Digitalisasi dan pengembangan UMKM lokal',
+      color: 'from-indigo-500 to-purple-500'
     }
-  ];
-
-  const socialMedia = [
-    { icon: 'facebook', name: 'Facebook', color: 'hover:bg-blue-600' },
-    { icon: 'instagram', name: 'Instagram', color: 'hover:bg-pink-600' },
-    { icon: 'twitter', name: 'Twitter', color: 'hover:bg-sky-500' },
-    { icon: 'whatsapp', name: 'WhatsApp', color: 'hover:bg-green-600' }
   ];
 
   return (
@@ -105,14 +108,14 @@ export default function Kontak() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
             {/* Contact Info */}
-            <div className="lg:col-span-1 space-y-6">
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700">
+            <div className="lg:col-span-1 h-full">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700 h-full flex flex-col">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
                   <span className="material-icons text-emerald-600">info</span>
-                  Informasi Kontak
+                  Informasi Platform
                 </h2>
                 
-                <div className="space-y-6">
+                <div className="space-y-5 flex-1">
                   {contactInfo.map((info, index) => (
                     <div key={index} className="group">
                       <div className="flex items-start gap-4">
@@ -123,47 +126,12 @@ export default function Kontak() {
                           <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
                             {info.title}
                           </h3>
-                          {info.link ? (
-                            <a
-                              href={info.link}
-                              className="text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
-                            >
-                              {info.content}
-                            </a>
-                          ) : (
-                            <p className="text-gray-600 dark:text-gray-400">
-                              {info.content}
-                            </p>
-                          )}
+                          <p className="text-gray-600 dark:text-gray-400">
+                            {info.content}
+                          </p>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Social Media */}
-              <div className="bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl p-8 text-white shadow-xl">
-                <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                  <span className="material-icons">share</span>
-                  Media Sosial
-                </h2>
-                <p className="text-white/90 mb-6">
-                  Ikuti kami di media sosial untuk update terbaru
-                </p>
-                <div className="grid grid-cols-2 gap-3">
-                  {socialMedia.map((social, index) => (
-                    <button
-                      key={index}
-                      className={`flex items-center justify-center gap-2 p-3 bg-white/20 backdrop-blur-sm rounded-xl ${social.color} transition-all duration-300 group`}
-                    >
-                      <span className="material-icons group-hover:scale-110 transition-transform">
-                        {social.icon === 'facebook' ? 'facebook' : 
-                         social.icon === 'instagram' ? 'camera_alt' : 
-                         social.icon === 'twitter' ? 'tag' : 'chat'}
-                      </span>
-                      <span className="font-medium">{social.name}</span>
-                    </button>
                   ))}
                 </div>
               </div>
@@ -320,42 +288,11 @@ export default function Kontak() {
               </div>
             </div>
           </div>
-
-          {/* Map Section */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-              <span className="material-icons text-emerald-600">place</span>
-              Lokasi Kami
-            </h2>
-            <div className="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-xl h-96 flex items-center justify-center">
-              <div className="text-center">
-                <span className="material-icons text-6xl text-gray-400 dark:text-gray-500 mb-4">map</span>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Peta lokasi akan ditampilkan di sini
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* FAQ Preview */}
-          <div className="mt-16 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-12 text-center border border-emerald-100 dark:border-gray-600">
-            <span className="material-icons text-6xl text-emerald-600 dark:text-emerald-500 mb-4">help</span>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Punya Pertanyaan?
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-              Lihat FAQ kami untuk jawaban cepat atas pertanyaan umum
-            </p>
-            <button className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-emerald-600 to-green-600 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
-              <span>Lihat FAQ</span>
-              <span className="material-icons">arrow_forward</span>
-            </button>
-          </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-4 mt-16">
+      <footer className="bg-gray-900 text-white py-12 px-4">
         <div className="container mx-auto max-w-6xl text-center">
           <p className="text-gray-400">© 2025 UMKM Tasikmalaya. Mendukung pertumbuhan ekonomi lokal.</p>
         </div>
