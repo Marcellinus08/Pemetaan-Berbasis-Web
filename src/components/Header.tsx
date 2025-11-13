@@ -31,6 +31,7 @@ export default function Header() {
     { name: 'Beranda', icon: 'home', href: '/' },
     { name: 'Peta UMKM', icon: 'map', href: '/peta-umkm' },
     { name: 'Daftar UMKM', icon: 'store', href: '/daftar-umkm' },
+    { name: 'Statistik', icon: 'bar_chart', href: '/statistik' },
     { name: 'Tentang', icon: 'info', href: '/tentang' },
     { name: 'Kontak', icon: 'mail', href: '/kontak' },
   ];
