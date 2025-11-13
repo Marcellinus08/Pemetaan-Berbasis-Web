@@ -51,6 +51,10 @@ export default function Map({ isDark, category, mapStyle }: MapProps) {
   const layerGroupRef = useRef<L.LayerGroup | null>(null);
   const [umkms, setUmkms] = useState<UMKM[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [locationAccuracy, setLocationAccuracy] = useState<number | null>(null);
+  const userMarkerRef = useRef<L.Marker | null>(null);
+  const routeLayerRef = useRef<L.Polyline | null>(null);
 
   // Fetch UMKM data from API
   useEffect(() => {
@@ -58,19 +62,6 @@ export default function Map({ isDark, category, mapStyle }: MapProps) {
       try {
         const response = await fetch('/api/umkm');
         const data = await response.json();
-        console.log('Fetched UMKM data:', data);
-        console.log('Data length:', data.length);
-        if (data.length > 0) {
-          console.log('First item:', data[0]);
-          console.log('First item coords:', `lat=${data[0].lat}, lng=${data[0].lng}`);
-          // Check valid coords
-          const validCoords = data.filter((u: UMKM) => u.lat && u.lng && !isNaN(u.lat) && !isNaN(u.lng));
-          console.log('Valid coords count:', validCoords.length);
-          const latValues = data.map((u: UMKM) => u.lat);
-          const lngValues = data.map((u: UMKM) => u.lng);
-          console.log('Lat values range:', `min=${Math.min(...latValues)}, max=${Math.max(...latValues)}`);
-          console.log('Lng values range:', `min=${Math.min(...lngValues)}, max=${Math.max(...lngValues)}`);
-        }
         setUmkms(data);
       } catch (error) {
         console.error('Error fetching UMKM data:', error);
@@ -78,6 +69,64 @@ export default function Map({ isDark, category, mapStyle }: MapProps) {
     };
 
     fetchData();
+
+    // Get user's current location with high accuracy GPS like Google Maps
+    if (navigator.geolocation) {
+      // First, get initial position
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLat = position.coords.latitude;
+          const userLng = position.coords.longitude;
+          const accuracy = position.coords.accuracy;
+          
+          setUserLocation({
+            lat: userLat,
+            lng: userLng
+          });
+          setLocationAccuracy(accuracy);
+        },
+        (error) => {
+          console.error('GPS Error:', error.message);
+          
+          // Fallback to Tasikmalaya center if geolocation fails
+          const fallbackLocation = { lat: -7.3267, lng: 108.2210 };
+          setUserLocation(fallbackLocation);
+        },
+        {
+          enableHighAccuracy: true,  // Use GPS instead of WiFi/IP
+          timeout: 15000,            // Wait up to 15 seconds
+          maximumAge: 0              // Don't use cached position
+        }
+      );
+
+      // Watch position for real-time updates (like Google Maps)
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          const userLat = position.coords.latitude;
+          const userLng = position.coords.longitude;
+          const accuracy = position.coords.accuracy;
+          
+          setUserLocation({
+            lat: userLat,
+            lng: userLng
+          });
+          setLocationAccuracy(accuracy);
+        },
+        (error) => {
+          console.error('GPS watch error:', error.message);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 5000  // Accept positions up to 5 seconds old
+        }
+      );
+
+      // Cleanup watch on unmount
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+      };
+    }
 
     // Listen for location selection from UMKMList
     const handleLocationSelect = (event: any) => {
@@ -91,19 +140,10 @@ export default function Map({ isDark, category, mapStyle }: MapProps) {
   // Initialize map only after data is loaded
   useEffect(() => {
     if (typeof window === 'undefined' || umkms.length === 0 || mapRef.current) return;
-
-    console.log('Initializing map with', umkms.length, 'UMKM');
     
     // Calculate bounds from all UMKM locations
     const latLngs = umkms.map(u => [u.lat, u.lng] as L.LatLngTuple);
-    console.log('LatLngs:', latLngs);
-    
     const bounds = L.latLngBounds(latLngs);
-    console.log('Calculated bounds:', bounds);
-    console.log('Bounds NE:', bounds.getNorthEast());
-    console.log('Bounds SW:', bounds.getSouthWest());
-    console.log('Bounds center:', bounds.getCenter());
-    console.log('Bounds toString:', bounds.toString());
     
     mapRef.current = L.map('map', { 
       zoomControl: true 
@@ -173,7 +213,6 @@ export default function Map({ isDark, category, mapStyle }: MapProps) {
     (mapRef.current as any).darkTiles = darkTiles;
 
     // Fit map to bounds immediately
-    console.log('Fitting map to bounds');
     mapRef.current.fitBounds(bounds.pad(0.1), { maxZoom: 14 });
 
     return () => {
@@ -200,20 +239,177 @@ export default function Map({ isDark, category, mapStyle }: MapProps) {
     }
   }, [isDark]);
 
+  // Show user location marker
+  useEffect(() => {
+    if (!mapRef.current || !userLocation) return;
+
+    // Remove existing user marker if any
+    if (userMarkerRef.current && mapRef.current.hasLayer(userMarkerRef.current)) {
+      mapRef.current.removeLayer(userMarkerRef.current);
+    }
+
+    // Create user location marker with blue pulsing icon
+    const userIcon = L.divIcon({
+      html: `
+        <div style="position: relative; width: 30px; height: 30px;">
+          <div style="
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #3B82F6;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: pulse-user 2s ease-out infinite;
+          "></div>
+          <div style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: #3B82F6;
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+          "></div>
+        </div>
+        <style>
+          @keyframes pulse-user {
+            0% { transform: scale(0.5); opacity: 0.5; }
+            50% { opacity: 0.3; }
+            100% { transform: scale(1.5); opacity: 0; }
+          }
+        </style>
+      `,
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+      className: 'user-location-marker'
+    });
+
+    const userMarker = L.marker([userLocation.lat, userLocation.lng], { icon: userIcon })
+      .addTo(mapRef.current)
+      .bindPopup(`
+        <div style="text-align: center; min-width: 200px;">
+          <strong style="color: #3B82F6; font-size: 14px;">📍 Lokasi GPS Anda</strong>
+          <div style="margin-top: 8px; font-size: 12px; color: #666;">
+            <div>Lat: ${userLocation.lat.toFixed(6)}</div>
+            <div>Lng: ${userLocation.lng.toFixed(6)}</div>
+            ${locationAccuracy ? `<div style="color: #10B981; margin-top: 4px;">🎯 Akurasi: ~${Math.round(locationAccuracy)}m</div>` : ''}
+          </div>
+          <a href="https://www.google.com/maps?q=${userLocation.lat},${userLocation.lng}" 
+             target="_blank" 
+             style="display: inline-block; margin-top: 8px; padding: 4px 8px; background: #10B981; color: white; text-decoration: none; border-radius: 4px; font-size: 11px;">
+            📍 Cek di Google Maps
+          </a>
+        </div>
+      `);
+
+    userMarkerRef.current = userMarker;
+  }, [userLocation, mapStyle, locationAccuracy]);
+
   // Update markers when category or data changes
   useEffect(() => {
     if (!mapRef.current || !layerGroupRef.current || umkms.length === 0) return;
 
+    const showRoute = async (toLat: number, toLng: number) => {
+      if (!userLocation || !mapRef.current) {
+        return;
+      }
+
+      // Remove existing route if any
+      if (routeLayerRef.current && mapRef.current.hasLayer(routeLayerRef.current)) {
+        mapRef.current.removeLayer(routeLayerRef.current);
+      }
+
+      // Make sure user marker is visible (re-add if needed)
+      if (userMarkerRef.current && !mapRef.current.hasLayer(userMarkerRef.current)) {
+        userMarkerRef.current.addTo(mapRef.current);
+      }
+
+      // Highlight user marker temporarily
+      if (userMarkerRef.current) {
+        userMarkerRef.current.openPopup();
+        setTimeout(() => {
+          userMarkerRef.current?.closePopup();
+        }, 2000);
+      }
+
+      try {
+        // Fetch route from OSRM (Open Source Routing Machine)
+        const response = await fetch(
+          `https://router.project-osrm.org/route/v1/driving/${userLocation.lng},${userLocation.lat};${toLng},${toLat}?overview=full&geometries=geojson`
+        );
+        
+        const data = await response.json();
+        
+        if (data.code === 'Ok' && data.routes && data.routes.length > 0) {
+          const routeCoordinates = data.routes[0].geometry.coordinates.map((coord: number[]) => [coord[1], coord[0]]);
+
+          // Draw the route following roads
+          const route = L.polyline(routeCoordinates, {
+            color: '#3B82F6',
+            weight: 5,
+            opacity: 0.8,
+            lineJoin: 'round',
+            lineCap: 'round'
+          }).addTo(mapRef.current);
+
+          routeLayerRef.current = route;
+
+          // Fit bounds to show the route
+          mapRef.current.fitBounds(route.getBounds(), { padding: [50, 50] });
+        } else {
+          throw new Error('Rute tidak ditemukan');
+        }
+      } catch (error) {
+        console.error('Error fetching route:', error);
+        
+        // Fallback to straight line if routing fails
+        const route = L.polyline(
+          [[userLocation.lat, userLocation.lng], [toLat, toLng]],
+          {
+            color: '#3B82F6',
+            weight: 5,
+            opacity: 0.8,
+            dashArray: '10, 10',
+            lineJoin: 'round'
+          }
+        ).addTo(mapRef.current);
+
+        routeLayerRef.current = route;
+
+        const bounds = L.latLngBounds([
+          [userLocation.lat, userLocation.lng],
+          [toLat, toLng]
+        ]);
+        mapRef.current.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
+      }
+    };
+
     const buildPopup = (item: UMKM) => {
-      const gmaps = `https://www.google.com/maps?q=${item.lat},${item.lng}`;
+      const gmaps = `https://www.google.com/maps/dir/?api=1&origin=${userLocation?.lat || ''},${userLocation?.lng || ''}&destination=${item.lat},${item.lng}`;
+      
+      // Make showRoute globally available
+      (window as any).navigateToUMKM = (lat: number, lng: number) => {
+        showRoute(lat, lng);
+      };
+
       return `
         <div class="space-y-1">
           <div class="font-semibold">${item.name}</div>
           <div class="text-xs inline-block px-2 py-0.5 rounded-full" style="background:${CAT_COLOR[item.category]||'#ccc'}20;color:${CAT_COLOR[item.category]||'#333'}">${item.category}</div>
           <div class="text-sm text-gray-700">${item.address}</div>
-          <div class="text-sm"><span style="color: #F97316;">🕐</span> ${item.phone}</div>
-          <div class="pt-1">
-            <a href="${gmaps}" target="_blank" rel="noopener" class="text-primary text-sm">Lihat rute ↗</a>
+          <div class="text-sm"><span style="color: #F97316;">�</span> ${item.phone}</div>
+          <div class="pt-2 flex gap-2">
+            ${userLocation ? `
+              <button onclick="window.navigateToUMKM(${item.lat}, ${item.lng})" style="background: #3B82F6; color: white; padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px;">
+                📍 Navigasi
+              </button>
+            ` : ''}
+            <a href="${gmaps}" target="_blank" rel="noopener" style="background: #10B981; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; display: inline-block; font-size: 12px;">
+              🗺️ Google Maps
+            </a>
           </div>
         </div>`;
     };
@@ -284,6 +480,7 @@ export default function Map({ isDark, category, mapStyle }: MapProps) {
       const marker = L.marker([item.lat, item.lng], { icon: customIcon });
 
       marker.bindPopup(buildPopup(item));
+      
       marker.addTo(layerGroupRef.current!);
       markers.push(marker as any);
     });
@@ -303,7 +500,7 @@ export default function Map({ isDark, category, mapStyle }: MapProps) {
         mapRef.current.fitBounds(bounds.pad(0.1), { maxZoom: 14 });
       }
     }
-  }, [category, umkms, selectedLocation, isDark, mapStyle]);
+  }, [category, umkms, selectedLocation, isDark, mapStyle, userLocation]);
 
   return <div id="map" className="w-full h-[420px] rounded-lg" />;
 }
