@@ -32,7 +32,7 @@ export default function Tentang() {
       name: 'Marcellinus Geofani',
       prodi: 'S1 Teknik Komputer',
       icon: 'code',
-      avatar: '/avatar_marcel.jpeg',
+      avatar: '/marcel_avatar.jpeg',
       color: 'from-emerald-500 to-teal-500',
       description: 'Pengembangan website'
     },
