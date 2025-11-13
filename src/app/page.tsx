@@ -67,7 +67,7 @@ export default function Home() {
                   verified
                 </span>
                 <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
-                  Platform Pemetaan UMKM Terpercaya
+                  Platform Pemetaan UMKM
                 </span>
               </div>
 
