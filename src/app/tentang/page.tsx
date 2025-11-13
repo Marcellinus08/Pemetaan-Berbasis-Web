@@ -32,6 +32,7 @@ export default function Tentang() {
       name: 'Marcellinus Geofani',
       prodi: 'S1 Teknik Komputer',
       icon: 'code',
+      avatar: '/avatar_marcel.jpeg',
       color: 'from-emerald-500 to-teal-500',
       description: 'Pengembangan website'
     },
@@ -181,9 +182,21 @@ export default function Tentang() {
                   key={index}
                   className="group bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 w-full sm:w-64"
                 >
-                  <div className={`w-28 h-28 bg-gradient-to-br ${member.color} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg`}>
-                    <span className="material-icons text-white text-5xl">{member.icon}</span>
-                  </div>
+                  {member.avatar ? (
+                    <div className="w-28 h-28 rounded-full overflow-hidden mx-auto mb-4 group-hover:scale-110 transition-all shadow-lg border-4 border-emerald-500">
+                      <Image
+                        src={member.avatar}
+                        alt={member.name}
+                        width={112}
+                        height={112}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className={`w-28 h-28 bg-gradient-to-br ${member.color} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg`}>
+                      <span className="material-icons text-white text-5xl">{member.icon}</span>
+                    </div>
+                  )}
                   <div className="text-center">
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                       {member.name}
