@@ -214,14 +214,14 @@ export default function DaftarUMKM() {
                           className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform"
                           style={{ backgroundColor: CAT_COLOR[umkm.category] }}
                         >
-                          <span className="material-icons text-white text-2xl">storefront</span>
+                          <span className="material-icons text-gray-900 dark:text-white text-2xl">storefront</span>
                         </div>
                         <div className="flex-1 min-w-0">
                           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-500 transition-colors truncate">
                             {umkm.name}
                           </h3>
                           <span
-                            className="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white"
+                            className="inline-block px-3 py-1 rounded-full text-xs font-semibold text-gray-900 dark:text-white"
                             style={{ backgroundColor: CAT_COLOR[umkm.category] }}
                           >
                             {umkm.category}
@@ -229,23 +229,14 @@ export default function DaftarUMKM() {
                         </div>
                       </div>
                       
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
-                        {umkm.description}
-                      </p>
-                      
                       <div className="space-y-3 mb-4">
                         <div className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
                           <span className="material-icons text-sm mt-0.5 text-emerald-500">location_on</span>
                           <span className="flex-1 line-clamp-2">{umkm.address}</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                          <span className="material-icons text-sm text-emerald-400">phone</span>
-                          <a 
-                            href={`tel:${umkm.phone}`} 
-                            className="hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors font-medium"
-                          >
-                            {umkm.phone}
-                          </a>
+                          <span className="material-icons text-sm text-emerald-400">schedule</span>
+                          <span className="font-medium">{umkm.operatingHours}</span>
                         </div>
                       </div>
                       
