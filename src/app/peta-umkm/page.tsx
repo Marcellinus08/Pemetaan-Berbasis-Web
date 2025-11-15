@@ -43,6 +43,7 @@ export default function PetaUMKM() {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationAccuracy, setLocationAccuracy] = useState<number | null>(null);
   const [isActiveNavigation, setIsActiveNavigation] = useState(false);
+  const [categoryChangedByUser, setCategoryChangedByUser] = useState(false);
 
   // Calculate distance between two coordinates (Haversine formula)
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -75,10 +76,13 @@ export default function PetaUMKM() {
     fetchUMKMs();
   }, []);
 
-  // Reset selectedUMKM when category changes
+  // Reset selectedUMKM only when user manually changes category (not from clicking UMKM)
   useEffect(() => {
-    setSelectedUMKM(null);
-  }, [selectedCategory]);
+    if (categoryChangedByUser) {
+      setSelectedUMKM(null);
+      setCategoryChangedByUser(false);
+    }
+  }, [selectedCategory, categoryChangedByUser]);
 
   const categories = ['Semua', ...Array.from(new Set(umkms.map(u => u.category)))];
 
@@ -118,7 +122,10 @@ export default function PetaUMKM() {
               </label>
               <select
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => {
+                  setCategoryChangedByUser(true);
+                  setSelectedCategory(e.target.value);
+                }}
                 className="w-full px-3 py-1.5 text-sm bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all text-gray-900 dark:text-white"
               >
                 <option value="Semua">Semua Kategori</option>
@@ -141,7 +148,10 @@ export default function PetaUMKM() {
             {filteredUMKMs.map((umkm, index) => (
               <div
                 key={index}
-                onClick={() => setSelectedUMKM(umkm)}
+                onClick={() => {
+                  setSelectedUMKM(umkm);
+                  setSelectedCategory(umkm.category);
+                }}
                 className={`p-2.5 cursor-pointer transition-all hover:bg-gray-50 dark:hover:bg-gray-700/50 ${
                   selectedUMKM?.no === umkm.no ? 'bg-emerald-50 dark:bg-emerald-900/10 border-l-4 border-emerald-500' : ''
                 }`}
