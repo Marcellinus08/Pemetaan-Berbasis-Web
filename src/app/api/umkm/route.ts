@@ -42,7 +42,8 @@ export async function GET() {
           phone: umkm.waktu_buka || 'Tidak ada informasi',
           lat,
           lng,
-          operatingHours: umkm.waktu_buka || ''
+          operatingHours: umkm.waktu_buka || '',
+          gambar: umkm.gambar || null
         };
       });
 

@@ -304,9 +304,10 @@ export default function Map({ isDark, category, mapStyle, selectedUMKM, onNaviga
             padding: 10px;
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             border: 1px solid #e2e8f0;
             text-align: center;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           ">
             <div style="
               display: flex;
@@ -335,6 +336,7 @@ export default function Map({ isDark, category, mapStyle, selectedUMKM, onNaviga
                 font-size: 11px;
                 font-weight: 600;
                 color: #1e293b;
+                font-family: 'Poppins', sans-serif;
               ">Lokasi GPS Anda</div>
             </div>
             
@@ -522,9 +524,10 @@ export default function Map({ isDark, category, mapStyle, selectedUMKM, onNaviga
           <div style="
             padding: 12px;
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             border: 1px solid #e2e8f0;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
           ">
             <!-- Header with Name and Category -->
             <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1.5px solid #e2e8f0;">
@@ -534,22 +537,18 @@ export default function Map({ isDark, category, mapStyle, selectedUMKM, onNaviga
                 color: #1e293b;
                 margin: 0 0 6px 0;
                 line-height: 1.3;
+                font-family: 'Poppins', sans-serif;
               ">${item.name}</h3>
-              <div style="
+              <span style="
                 display: inline-block;
                 padding: 3px 8px;
                 border-radius: 4px;
-                background: ${CAT_COLOR[item.category]||'#ccc'}20;
-                border: 1px solid ${CAT_COLOR[item.category]||'#ccc'}40;
-              ">
-                <span style="
-                  font-size: 10px;
-                  font-weight: 600;
-                  color: ${CAT_COLOR[item.category]||'#333'};
-                  text-transform: uppercase;
-                  letter-spacing: 0.5px;
-                ">${item.category}</span>
-              </div>
+                background: ${CAT_COLOR[item.category]||'#6B7280'};
+                font-size: 10px;
+                font-weight: 500;
+                color: white;
+                font-family: 'Poppins', sans-serif;
+              ">${item.category}</span>
             </div>
             
             <!-- Info Section -->
@@ -569,6 +568,7 @@ export default function Map({ isDark, category, mapStyle, selectedUMKM, onNaviga
                   font-size: 10px;
                   color: #475569;
                   line-height: 1.5;
+                  font-family: 'Poppins', sans-serif;
                 ">${item.address}</span>
               </div>
               
@@ -586,6 +586,7 @@ export default function Map({ isDark, category, mapStyle, selectedUMKM, onNaviga
                   font-size: 10px;
                   font-weight: 600;
                   color: #1e293b;
+                  font-family: 'Poppins', sans-serif;
                 ">${item.operatingHours}</span>
               </div>
             </div>
@@ -596,22 +597,41 @@ export default function Map({ isDark, category, mapStyle, selectedUMKM, onNaviga
                 <button onclick="window.navigateToUMKM(${item.lat}, ${item.lng})" style="
                   width: 100%;
                   padding: 8px 12px;
-                  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+                  background: linear-gradient(90deg, #10B981 0%, #14B8A6 50%, #10B981 100%);
+                  background-size: 200% 100%;
                   color: white;
                   border: none;
-                  border-radius: 6px;
+                  border-radius: 8px;
                   cursor: pointer;
-                  font-size: 11px;
-                  font-weight: 600;
-                  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
-                  transition: all 0.2s;
+                  font-size: 10px;
+                  font-weight: 700;
+                  font-family: 'Poppins', sans-serif;
+                  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                  transition: all 0.4s ease;
                   display: flex;
                   align-items: center;
                   justify-content: center;
-                  gap: 5px;
-                " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.35)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(16, 185, 129, 0.25)';">
-                  <span style="font-size: 16px;">🎯</span>
-                  <span>Set Tujuan</span>
+                  gap: 6px;
+                  text-transform: uppercase;
+                  letter-spacing: 0.5px;
+                  position: relative;
+                  overflow: hidden;
+                " onmouseover="
+                  this.style.transform='translateY(-0.5px) scale(1.01)'; 
+                  this.style.boxShadow='0 4px 12px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)';
+                  this.style.backgroundPosition='100% 0';
+                " onmouseout="
+                  this.style.transform='translateY(0) scale(1)'; 
+                  this.style.boxShadow='0 2px 8px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+                  this.style.backgroundPosition='0% 0';
+                " onmousedown="this.style.transform='translateY(0) scale(0.99)';" onmouseup="this.style.transform='translateY(-0.5px) scale(1.01)';">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="white"/>
+                  </svg>
+                  <span style="font-size: 10px;">Atur Tujuan</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                    <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6L16 12L10 18L8.59 16.59Z" fill="white"/>
+                  </svg>
                 </button>
               ` : ''}
               ${isNavigating ? `
@@ -625,6 +645,7 @@ export default function Map({ isDark, category, mapStyle, selectedUMKM, onNaviga
                   cursor: pointer;
                   font-size: 13px;
                   font-weight: 700;
+                  font-family: 'Poppins', sans-serif;
                   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
                   transition: all 0.2s;
                   display: flex;

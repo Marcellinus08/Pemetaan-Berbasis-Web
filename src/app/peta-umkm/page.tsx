@@ -272,7 +272,7 @@ export default function PetaUMKM() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-1 pt-2">
+                <div className="flex gap-2 pt-2">
                   {/* Mulai Navigasi Button - Only show when destination is set but navigation not active */}
                   {!isActiveNavigation && (
                     <button
@@ -282,10 +282,11 @@ export default function PetaUMKM() {
                           (window as any).startActiveNavigation();
                         }
                       }}
-                      className="flex-1 px-2 py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded text-[11px] font-semibold transition-all hover:shadow-md flex items-center justify-center gap-1"
+                      className="flex-1 px-2.5 py-2 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500 bg-[length:200%_100%] hover:bg-[position:100%_0] text-white rounded-lg text-[10px] font-bold uppercase tracking-wide transition-all duration-400 hover:shadow-lg hover:shadow-blue-500/40 hover:-translate-y-0.5 hover:scale-[1.01] active:translate-y-0 active:scale-[0.99] flex items-center justify-center gap-1.5 shadow-md shadow-blue-500/30"
+                      style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}
                     >
-                      <span className="material-icons" style={{ fontSize: '14px' }}>navigation</span>
-                      Mulai
+                      <span className="material-icons" style={{ fontSize: '13px' }}>navigation</span>
+                      <span>Mulai</span>
                     </button>
                   )}
                   
@@ -299,10 +300,11 @@ export default function PetaUMKM() {
                         (window as any).stopNavigation();
                       }
                     }}
-                    className={`px-2 py-1.5 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded text-[11px] font-medium transition-all hover:shadow-md flex items-center justify-center gap-1 ${isActiveNavigation ? 'flex-1' : ''}`}
+                    className={`px-2.5 py-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 bg-[length:200%_100%] hover:bg-[position:100%_0] text-white rounded-lg text-[10px] font-bold uppercase tracking-wide transition-all duration-400 hover:shadow-lg hover:shadow-red-500/40 hover:-translate-y-0.5 hover:scale-[1.01] active:translate-y-0 active:scale-[0.99] flex items-center justify-center gap-1.5 shadow-md shadow-red-500/30 ${isActiveNavigation ? 'flex-1' : ''}`}
+                    style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}
                   >
-                    <span className="material-icons" style={{ fontSize: '14px' }}>close</span>
-                    Batal
+                    <span className="material-icons" style={{ fontSize: '13px' }}>close</span>
+                    <span>Batal</span>
                   </button>
                   
                   {/* Google Maps Button */}
@@ -310,10 +312,11 @@ export default function PetaUMKM() {
                     href={`https://www.google.com/maps/dir/?api=1&destination=${navigationTarget.lat},${navigationTarget.lng}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-2 py-1.5 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white rounded transition-all hover:shadow-md flex items-center justify-center"
+                    className="px-2.5 py-2 bg-gradient-to-r from-emerald-500 via-green-600 to-emerald-500 bg-[length:200%_100%] hover:bg-[position:100%_0] text-white rounded-lg transition-all duration-400 hover:shadow-lg hover:shadow-emerald-500/40 hover:-translate-y-0.5 hover:scale-[1.01] active:translate-y-0 active:scale-[0.99] flex items-center justify-center shadow-md shadow-emerald-500/30"
                     title="Buka di Google Maps"
+                    style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}
                   >
-                    <span className="material-icons" style={{ fontSize: '14px' }}>map</span>
+                    <span className="material-icons" style={{ fontSize: '13px' }}>map</span>
                   </a>
                 </div>
               </div>
