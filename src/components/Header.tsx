@@ -52,7 +52,7 @@ export default function Header() {
               
               {/* Logo container - Green */}
               <div className="relative w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                <span className="material-icons text-white text-2xl">storefront</span>
+                <span className="material-icons text-white text-4xl">store</span>
               </div>
             </div>
             

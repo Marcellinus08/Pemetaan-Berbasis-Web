@@ -19,6 +19,7 @@ interface UMKM {
   lat: number;
   lng: number;
   operatingHours: string;
+  gambar?: string | null;
 }
 
 export default function DaftarUMKM() {

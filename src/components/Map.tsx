@@ -15,6 +15,7 @@ interface UMKM {
   lat: number;
   lng: number;
   operatingHours: string;
+  gambar?: string | null;
 }
 
 export interface MapProps {
@@ -550,6 +551,38 @@ export default function Map({ isDark, category, mapStyle, selectedUMKM, onNaviga
                 font-family: 'Poppins', sans-serif;
               ">${item.category}</span>
             </div>
+            
+            <!-- Image Section (full width) -->
+            ${item.gambar ? `
+              <div style="margin-bottom: 10px;">
+                <img src="${item.gambar}" alt="${item.name}" style="
+                  width: 100%;
+                  height: 160px;
+                  border-radius: 8px;
+                  object-fit: cover;
+                  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                  border: 2px solid ${CAT_COLOR[item.category]||'#6B7280'};
+                ">
+              </div>
+            ` : `
+              <div style="
+                width: 100%;
+                height: 120px;
+                border-radius: 8px;
+                background: ${CAT_COLOR[item.category]||'#6B7280'};
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+              ">
+                <span style="
+                  font-family: 'Material Icons';
+                  font-size: 48px;
+                  color: white;
+                ">store</span>
+              </div>
+            `}
             
             <!-- Info Section -->
             <div style="margin-bottom: 10px;">

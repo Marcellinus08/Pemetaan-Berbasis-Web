@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { CAT_COLOR } from '@/data/umkm';
+import Image from 'next/image';
 
 interface UMKM {
   no: number;
@@ -14,6 +15,7 @@ interface UMKM {
   lat: number;
   lng: number;
   operatingHours: string;
+  gambar?: string | null;
 }
 
 interface UMKMListProps {
@@ -133,15 +135,37 @@ export default function UMKMList({ onLocationSelect }: UMKMListProps) {
               border border-gray-100 dark:border-gray-700 transition-all duration-300
               hover:border-primary-500/30 dark:hover:border-primary-500/30 animate-fade-in"
           >
-            <div className="flex justify-between items-start mb-3">
-              <h3 className="text-lg font-bold group-hover:text-primary-500 transition-colors">{umkm.name}</h3>
-              <span 
-                className="text-xs font-semibold px-3 py-1.5 rounded-full text-white
-                  shadow-soft transform group-hover:scale-105 transition-transform"
-                style={{ backgroundColor: CAT_COLOR[umkm.category] || '#6B7280' }}
+            <div className="flex items-start gap-4 mb-3">
+              {/* Icon/Image */}
+              <div 
+                className="w-20 h-20 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform flex-shrink-0 overflow-hidden"
+                style={{ backgroundColor: umkm.gambar ? 'transparent' : (CAT_COLOR[umkm.category] || '#6B7280') }}
               >
-                {umkm.category}
-              </span>
+                {umkm.gambar ? (
+                  <Image 
+                    src={umkm.gambar} 
+                    alt={umkm.name}
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                    unoptimized
+                  />
+                ) : (
+                  <span className="material-icons text-white text-3xl">storefront</span>
+                )}
+              </div>
+              
+              {/* Title and Category */}
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg font-bold group-hover:text-primary-500 transition-colors mb-2">{umkm.name}</h3>
+                <span 
+                  className="text-xs font-semibold px-3 py-1.5 rounded-full text-white inline-block
+                    shadow-soft transform group-hover:scale-105 transition-transform"
+                  style={{ backgroundColor: CAT_COLOR[umkm.category] || '#6B7280' }}
+                >
+                  {umkm.category}
+                </span>
+              </div>
             </div>
             <div className="space-y-3 text-subtext-light dark:text-subtext-dark text-sm">
               <div className="flex items-start group/item">

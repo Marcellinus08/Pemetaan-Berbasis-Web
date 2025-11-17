@@ -1,4 +1,5 @@
 import { CAT_COLOR } from '@/data/umkm';
+import Image from 'next/image';
 
 interface UMKM {
   no: number;
@@ -11,6 +12,7 @@ interface UMKM {
   lat: number;
   lng: number;
   operatingHours: string;
+  gambar?: string | null;
 }
 
 interface UMKMGridProps {
@@ -49,13 +51,24 @@ export default function UMKMGrid({ umkms, loading }: UMKMGridProps) {
           <div className="h-3" style={{ backgroundColor: CAT_COLOR[umkm.category] }}></div>
           
           <div className="p-6">
-            {/* Header with icon */}
+            {/* Header with icon/image */}
             <div className="flex items-start gap-4 mb-4">
               <div 
-                className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform"
-                style={{ backgroundColor: CAT_COLOR[umkm.category] }}
+                className="w-20 h-20 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform overflow-hidden"
+                style={{ backgroundColor: umkm.gambar ? 'transparent' : CAT_COLOR[umkm.category] }}
               >
-                <span className="material-icons text-gray-900 dark:text-white text-2xl">storefront</span>
+                {umkm.gambar ? (
+                  <Image 
+                    src={umkm.gambar} 
+                    alt={umkm.name}
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                    unoptimized
+                  />
+                ) : (
+                  <span className="material-icons text-gray-900 dark:text-white text-3xl">storefront</span>
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-500 transition-colors truncate">

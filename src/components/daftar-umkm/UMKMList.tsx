@@ -1,4 +1,5 @@
 import { CAT_COLOR } from '@/data/umkm';
+import Image from 'next/image';
 
 interface UMKM {
   no: number;
@@ -11,6 +12,7 @@ interface UMKM {
   lat: number;
   lng: number;
   operatingHours: string;
+  gambar?: string | null;
 }
 
 interface UMKMListProps {
@@ -54,10 +56,21 @@ export default function UMKMList({ umkms, loading }: UMKMListProps) {
                 <div className="flex-1">
                   <div className="flex items-start gap-3 mb-3">
                     <div 
-                      className="w-12 h-12 rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform flex-shrink-0"
-                      style={{ backgroundColor: CAT_COLOR[umkm.category] }}
+                      className="w-16 h-16 rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform flex-shrink-0 overflow-hidden"
+                      style={{ backgroundColor: umkm.gambar ? 'transparent' : CAT_COLOR[umkm.category] }}
                     >
-                      <span className="material-icons text-white">storefront</span>
+                      {umkm.gambar ? (
+                        <Image 
+                          src={umkm.gambar} 
+                          alt={umkm.name}
+                          width={64}
+                          height={64}
+                          className="w-full h-full object-cover"
+                          unoptimized
+                        />
+                      ) : (
+                        <span className="material-icons text-white text-2xl">storefront</span>
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">

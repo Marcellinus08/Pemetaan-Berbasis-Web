@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import { CAT_COLOR } from '@/data/umkm';
+import Image from 'next/image';
 
 interface UMKM {
   no: number;
@@ -16,6 +17,7 @@ interface UMKM {
   lat: number;
   lng: number;
   operatingHours: string;
+  gambar?: string | null;
 }
 
 // Import UMKMMap dynamically to avoid SSR issues with Leaflet
@@ -158,12 +160,23 @@ export default function PetaUMKM() {
               >
                 <div className="flex items-start gap-2">
                   <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm"
+                    className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden"
                     style={{ 
-                      backgroundColor: CAT_COLOR[umkm.category] || '#6B7280'
+                      backgroundColor: umkm.gambar ? 'transparent' : (CAT_COLOR[umkm.category] || '#6B7280')
                     }}
                   >
-                    <span className="material-icons text-xs" style={{ color: 'white' }}>store</span>
+                    {umkm.gambar ? (
+                      <Image 
+                        src={umkm.gambar} 
+                        alt={umkm.name}
+                        width={48}
+                        height={48}
+                        className="w-full h-full object-cover"
+                        unoptimized
+                      />
+                    ) : (
+                      <span className="material-icons text-sm" style={{ color: 'white' }}>store</span>
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-gray-900 dark:text-white text-sm mb-0.5 truncate">
