@@ -3,22 +3,28 @@
 @tailwind utilities;
 
 @layer base {
-  /* Custom scrollbar */
+  /* Hide scrollbar completely */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    display: none;
+    width: 0;
+    height: 0;
   }
 
-  ::-webkit-scrollbar-track {
-    @apply bg-gray-100 dark:bg-gray-900;
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
-  ::-webkit-scrollbar-thumb {
-    @apply bg-gradient-to-b from-emerald-400 to-green-500 rounded-full;
+  html, body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    @apply from-emerald-500 to-green-600;
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 
   /* Smooth scrolling */

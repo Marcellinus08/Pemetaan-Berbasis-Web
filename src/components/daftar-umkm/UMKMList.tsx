@@ -47,57 +47,53 @@ export default function UMKMList({ umkms, loading }: UMKMListProps) {
           key={index}
           className="group bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300"
         >
-          <div className="flex flex-col md:flex-row">
+          <div className="flex">
             {/* Left color bar */}
-            <div className="w-full md:w-2 h-2 md:h-auto" style={{ backgroundColor: CAT_COLOR[umkm.category] }}></div>
+            <div className="w-1.5 flex-shrink-0" style={{ backgroundColor: CAT_COLOR[umkm.category] }}></div>
             
-            <div className="flex-1 p-6">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div 
-                      className="w-16 h-16 rounded-lg flex items-center justify-center shadow-md group-hover:scale-110 transition-transform flex-shrink-0 overflow-hidden"
-                      style={{ backgroundColor: umkm.gambar ? 'transparent' : CAT_COLOR[umkm.category] }}
+            <div className="flex-1 p-5">
+              <div className="flex items-start gap-4">
+                {/* Icon/Image */}
+                <div 
+                  className="w-24 h-24 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform flex-shrink-0 overflow-hidden"
+                  style={{ backgroundColor: umkm.gambar ? 'transparent' : CAT_COLOR[umkm.category] }}
+                >
+                  {umkm.gambar ? (
+                    <Image 
+                      src={umkm.gambar} 
+                      alt={umkm.name}
+                      width={96}
+                      height={96}
+                      className="w-full h-full object-cover"
+                      unoptimized
+                    />
+                  ) : (
+                    <span className="material-icons text-white text-3xl">storefront</span>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors flex-1">
+                      {umkm.name}
+                    </h3>
+                    <span
+                      className="inline-block text-xs font-semibold text-white flex-shrink-0"
+                      style={{ backgroundColor: CAT_COLOR[umkm.category], borderRadius: '4px', padding: '3px 8px' }}
                     >
-                      {umkm.gambar ? (
-                        <Image 
-                          src={umkm.gambar} 
-                          alt={umkm.name}
-                          width={64}
-                          height={64}
-                          className="w-full h-full object-cover"
-                          unoptimized
-                        />
-                      ) : (
-                        <span className="material-icons text-white text-2xl">storefront</span>
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                        {umkm.name}
-                      </h3>
-                      <span
-                        className="inline-block text-xs font-semibold text-white"
-                        style={{ backgroundColor: CAT_COLOR[umkm.category], borderRadius: '4px', padding: '3px 8px' }}
-                      >
-                        {umkm.category}
-                      </span>
-                    </div>
+                      {umkm.category}
+                    </span>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="space-y-2">
                     <div className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <span className="material-icons text-sm text-indigo-500 mt-0.5">location_on</span>
+                      <span className="material-icons text-sm text-emerald-500 mt-0.5 flex-shrink-0">location_on</span>
                       <span className="flex-1">{umkm.address}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <span className="material-icons text-sm text-green-500">phone</span>
-                      <a 
-                        href={`tel:${umkm.phone}`} 
-                        className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium"
-                      >
-                        {umkm.phone}
-                      </a>
+                      <span className="material-icons text-sm text-emerald-400 flex-shrink-0">schedule</span>
+                      <span className="font-medium">{umkm.operatingHours}</span>
                     </div>
                   </div>
                 </div>

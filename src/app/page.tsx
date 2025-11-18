@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import Header from '@/components/Header';
 import HeroSection from '@/components/beranda/HeroSection';
 import StatsSection from '@/components/beranda/StatsSection';

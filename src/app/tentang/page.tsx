@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import Header from '@/components/Header';
 import HeroSection from '@/components/tentang/HeroSection';
 import PurposeSection from '@/components/tentang/PurposeSection';
