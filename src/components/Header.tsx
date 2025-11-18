@@ -49,10 +49,13 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative">
+              {/* Glow effect */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 rounded-full blur opacity-40 group-hover:opacity-70 transition duration-500"></div>
+              
               {/* Logo container */}
-              <div className="relative w-12 h-12 rounded-xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg overflow-hidden">
+              <div className="relative w-12 h-12 transform group-hover:scale-110 transition-transform duration-300">
                 <Image 
-                  src="/logo_umkm.png" 
+                  src="/logo_website.png" 
                   alt="Logo UMKM"
                   width={48}
                   height={48}

@@ -9,8 +9,13 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Peta UMKM Tasikmalaya",
+  title: "UMKM Tasikmalaya",
   description: "Peta sebaran UMKM di Tasikmalaya",
+  icons: {
+    icon: '/logo_website.png',
+    shortcut: '/logo_website.png',
+    apple: '/logo_website.png',
+  },
 };
 
 export default function RootLayout({

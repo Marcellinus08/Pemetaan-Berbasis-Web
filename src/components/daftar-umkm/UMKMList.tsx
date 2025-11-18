@@ -77,8 +77,8 @@ export default function UMKMList({ umkms, loading }: UMKMListProps) {
                         {umkm.name}
                       </h3>
                       <span
-                        className="inline-block py-1 rounded-full text-xs font-semibold text-white"
-                        style={{ backgroundColor: CAT_COLOR[umkm.category] }}
+                        className="inline-block text-xs font-semibold text-white"
+                        style={{ backgroundColor: CAT_COLOR[umkm.category], borderRadius: '4px', padding: '3px 8px' }}
                       >
                         {umkm.category}
                       </span>
@@ -100,13 +100,6 @@ export default function UMKMList({ umkms, loading }: UMKMListProps) {
                       </a>
                     </div>
                   </div>
-                </div>
-                
-                <div className="flex md:flex-col gap-2 md:w-32 flex-shrink-0">
-                  <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg font-semibold hover:from-indigo-600 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg text-sm">
-                    <span className="material-icons text-sm">directions</span>
-                    <span>Lokasi</span>
-                  </button>
                 </div>
               </div>
             </div>

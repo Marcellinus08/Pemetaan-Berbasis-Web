@@ -45,38 +45,38 @@ export default function UMKMGrid({ umkms, loading }: UMKMGridProps) {
       {umkms.map((umkm, index) => (
         <div
           key={index}
-          className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transform hover:-translate-y-2 transition-all duration-300"
+          className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transform hover:-translate-y-2 transition-all duration-300 flex flex-col"
         >
           {/* Category stripe */}
           <div className="h-3" style={{ backgroundColor: CAT_COLOR[umkm.category] }}></div>
           
-          <div className="p-6">
+          <div className="p-6 flex flex-col flex-1">
             {/* Header with icon/image */}
             <div className="flex items-start gap-4 mb-4">
               <div 
-                className="w-20 h-20 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform overflow-hidden"
+                className="w-16 h-16 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform overflow-hidden flex-shrink-0"
                 style={{ backgroundColor: umkm.gambar ? 'transparent' : CAT_COLOR[umkm.category] }}
               >
                 {umkm.gambar ? (
                   <Image 
                     src={umkm.gambar} 
                     alt={umkm.name}
-                    width={80}
-                    height={80}
+                    width={64}
+                    height={64}
                     className="w-full h-full object-cover"
                     unoptimized
                   />
                 ) : (
-                  <span className="material-icons text-gray-900 dark:text-white text-3xl">storefront</span>
+                  <span className="material-icons text-gray-900 dark:text-white text-2xl">storefront</span>
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-500 transition-colors truncate">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-500 transition-colors line-clamp-2">
                   {umkm.name}
                 </h3>
                 <span
-                  className="inline-block py-1 rounded-full text-xs font-semibold text-gray-900 dark:text-white"
-                  style={{ backgroundColor: CAT_COLOR[umkm.category] }}
+                  className="inline-block py-1 text-xs font-semibold text-white"
+                  style={{ backgroundColor: CAT_COLOR[umkm.category], borderRadius: '4px', padding: '3px 8px' }}
                 >
                   {umkm.category}
                 </span>
@@ -85,20 +85,16 @@ export default function UMKMGrid({ umkms, loading }: UMKMGridProps) {
             
             <div className="space-y-3 mb-4">
               <div className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
-                <span className="material-icons text-sm mt-0.5 text-emerald-500">location_on</span>
-                <span className="flex-1 line-clamp-2">{umkm.address}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                <span className="material-icons text-sm text-emerald-400">schedule</span>
-                <span className="font-medium">{umkm.operatingHours}</span>
+                <span className="material-icons text-sm mt-0.5 text-emerald-500 flex-shrink-0">location_on</span>
+                <span className="flex-1">{umkm.address}</span>
               </div>
             </div>
-            
-            <div className="flex gap-2">
-              <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-green-500 text-white rounded-lg font-semibold hover:from-emerald-600 hover:to-green-600 transition-all duration-300 shadow-md hover:shadow-lg">
-                <span className="material-icons text-sm">directions</span>
-                <span>Lokasi</span>
-              </button>
+
+            <div className="mt-auto pt-3 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                <span className="material-icons text-sm text-emerald-400 flex-shrink-0">schedule</span>
+                <span className="font-medium">{umkm.operatingHours}</span>
+              </div>
             </div>
           </div>
         </div>
