@@ -2,12 +2,10 @@ import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: [
-    // jika pakai app router di root
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
 
-    // jika struktur di dalam src (kayak punyamu)
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -22,7 +20,7 @@ const config: Config = {
           200: '#80FFD1',
           300: '#4DFFBE',
           400: '#1AFFAB',
-          500: '#10B981', // base color
+          500: '#10B981',
           600: '#0D935E',
           700: '#0A6E3B',
           800: '#064A18',
