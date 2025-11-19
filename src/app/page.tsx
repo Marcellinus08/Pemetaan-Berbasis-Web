@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import './globals.css';
 
 import Header from '@/components/Header';
 import HeroSection from '@/components/beranda/HeroSection';
