@@ -1,7 +1,32 @@
-/* Tailwind CSS - Updated for Vercel deployment */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #E6FFF7;
+  --color-primary-100: #B3FFE4;
+  --color-primary-200: #80FFD1;
+  --color-primary-300: #4DFFBE;
+  --color-primary-400: #1AFFAB;
+  --color-primary-500: #10B981;
+  --color-primary-600: #0D935E;
+  --color-primary-700: #0A6E3B;
+  --color-primary-800: #064A18;
+  --color-primary-900: #032505;
+  
+  --color-background-light: #F8FAFC;
+  --color-background-dark: #0F172A;
+  --color-card-light: #FFFFFF;
+  --color-card-dark: #1E293B;
+  --color-text-light: #1E293B;
+  --color-text-dark: #F1F5F9;
+  --color-subtext-light: #64748B;
+  --color-subtext-dark: #94A3B8;
+  
+  --color-accent-blue: #3B82F6;
+  --color-accent-purple: #8B5CF6;
+  --color-accent-pink: #EC4899;
+  --color-accent-orange: #F97316;
+  --color-accent-teal: #14B8A6;
+}
 
 @layer base {
   /* Hide scrollbar completely */
