@@ -12,10 +12,9 @@ export default function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Check localStorage and system preference
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const shouldBeDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+    // Check localStorage, default to light mode
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const shouldBeDark = savedTheme === 'dark';
     
     if (shouldBeDark) {
       document.documentElement.classList.add('dark');
