@@ -23,17 +23,47 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus('idle');
     
-    // Simulasi pengiriman form
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-      
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          full_name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+        
+        setTimeout(() => {
+          setSubmitStatus('idle');
+        }, 5000);
+      } else {
+        setSubmitStatus('error');
+        setTimeout(() => {
+          setSubmitStatus('idle');
+        }, 5000);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
       setTimeout(() => {
         setSubmitStatus('idle');
-      }, 3000);
-    }, 1500);
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -56,6 +86,15 @@ export default function ContactForm() {
             <span className="material-icons text-green-600 dark:text-green-400">check_circle</span>
             <p className="text-green-800 dark:text-green-400 font-medium">
               Pesan Anda berhasil terkirim! Kami akan segera menghubungi Anda.
+            </p>
+          </div>
+        )}
+
+        {submitStatus === 'error' && (
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-center gap-3">
+            <span className="material-icons text-red-600 dark:text-red-400">error</span>
+            <p className="text-red-800 dark:text-red-400 font-medium">
+              Gagal mengirim pesan. Silakan coba lagi.
             </p>
           </div>
         )}
