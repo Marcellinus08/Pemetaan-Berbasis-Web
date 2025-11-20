@@ -1,5 +1,6 @@
 import { CAT_COLOR } from '@/data/umkm';
 import Image from 'next/image';
+import { memo } from 'react';
 
 interface UMKM {
   no: number;
@@ -20,12 +21,31 @@ interface UMKMGridProps {
   loading: boolean;
 }
 
-export default function UMKMGrid({ umkms, loading }: UMKMGridProps) {
+function UMKMGrid({ umkms, loading }: UMKMGridProps) {
   if (loading) {
     return (
-      <div className="text-center py-16">
-        <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-emerald-500 mb-4"></div>
-        <p className="text-gray-600 dark:text-gray-400">Memuat data UMKM dari database...</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[...Array(9)].map((_, i) => (
+          <div
+            key={i}
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden animate-pulse"
+          >
+            <div className="h-3 bg-gray-300 dark:bg-gray-600"></div>
+            <div className="p-6">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-16 h-16 rounded-xl bg-gray-300 dark:bg-gray-600"></div>
+                <div className="flex-1 space-y-2">
+                  <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-3/4"></div>
+                  <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-1/2"></div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded"></div>
+                <div className="h-3 bg-gray-300 dark:bg-gray-600 rounded w-5/6"></div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     );
   }
@@ -64,6 +84,9 @@ export default function UMKMGrid({ umkms, loading }: UMKMGridProps) {
                     width={64}
                     height={64}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZTVlN2ViIi8+PC9zdmc+"
                     unoptimized
                   />
                 ) : (
@@ -102,3 +125,5 @@ export default function UMKMGrid({ umkms, loading }: UMKMGridProps) {
     </div>
   );
 }
+
+export default memo(UMKMGrid);

@@ -160,7 +160,7 @@ export default function PetaUMKM() {
               >
                 <div className="flex items-start gap-2">
                   <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm overflow-hidden"
+                    className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 shadow-sm overflow-hidden"
                     style={{ 
                       backgroundColor: umkm.gambar ? 'transparent' : (CAT_COLOR[umkm.category] || '#6B7280')
                     }}
@@ -172,6 +172,9 @@ export default function PetaUMKM() {
                         width={48}
                         height={48}
                         className="w-full h-full object-cover"
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZTVlN2ViIi8+PC9zdmc+"
                         unoptimized
                       />
                     ) : (
@@ -234,7 +237,7 @@ export default function PetaUMKM() {
                 {/* User Location Info */}
                 {userLocation && (
                   <div className="flex items-start gap-2 pb-2 border-b border-gray-100 dark:border-gray-700">
-                    <div className="w-8 h-8 bg-linear-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow">
+                    <div className="w-8 h-8 bg-linear-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shrink-0 shadow">
                       <span className="material-icons text-white text-base">my_location</span>
                     </div>
                     <div className="flex-1 min-w-0">
@@ -250,7 +253,7 @@ export default function PetaUMKM() {
 
                 {/* Navigation Target Info */}
                 <div className="flex items-start gap-2">
-                  <div className="w-8 h-8 bg-linear-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow">
+                  <div className="w-8 h-8 bg-linear-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center shrink-0 shadow">
                     <span className="material-icons text-white text-base">place</span>
                   </div>
                   <div className="flex-1 min-w-0">
@@ -371,7 +374,7 @@ export default function PetaUMKM() {
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-2 flex-shrink-0">
+                <div className="flex gap-2 shrink-0">
                   <button className="px-3 py-2 bg-linear-to-r from-emerald-500 to-green-500 text-white rounded-lg text-sm font-medium hover:from-emerald-600 hover:to-green-600 transition-all flex items-center gap-1 shadow-md">
                     <span className="material-icons text-sm">info</span>
                     Detail

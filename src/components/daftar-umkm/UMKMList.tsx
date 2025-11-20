@@ -1,5 +1,6 @@
 import { CAT_COLOR } from '@/data/umkm';
 import Image from 'next/image';
+import { memo } from 'react';
 
 interface UMKM {
   no: number;
@@ -20,12 +21,30 @@ interface UMKMListProps {
   loading: boolean;
 }
 
-export default function UMKMList({ umkms, loading }: UMKMListProps) {
+function UMKMList({ umkms, loading }: UMKMListProps) {
   if (loading) {
     return (
-      <div className="text-center py-16">
-        <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-emerald-500 mb-4"></div>
-        <p className="text-gray-600 dark:text-gray-400">Memuat data UMKM dari database...</p>
+      <div className="space-y-4">
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden animate-pulse"
+          >
+            <div className="flex">
+              <div className="w-1.5 bg-gray-300 dark:bg-gray-600"></div>
+              <div className="flex-1 p-5">
+                <div className="flex items-start gap-4">
+                  <div className="w-24 h-24 rounded-lg bg-gray-300 dark:bg-gray-600 shrink-0"></div>
+                  <div className="flex-1 space-y-3">
+                    <div className="h-5 bg-gray-300 dark:bg-gray-600 rounded w-3/4"></div>
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-full"></div>
+                    <div className="h-4 bg-gray-300 dark:bg-gray-600 rounded w-2/3"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     );
   }
@@ -49,13 +68,13 @@ export default function UMKMList({ umkms, loading }: UMKMListProps) {
         >
           <div className="flex">
             {/* Left color bar */}
-            <div className="w-1.5 flex-shrink-0" style={{ backgroundColor: CAT_COLOR[umkm.category] }}></div>
+            <div className="w-1.5 shrink-0" style={{ backgroundColor: CAT_COLOR[umkm.category] }}></div>
             
             <div className="flex-1 p-5">
               <div className="flex items-start gap-4">
                 {/* Icon/Image */}
                 <div 
-                  className="w-24 h-24 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform flex-shrink-0 overflow-hidden"
+                  className="w-24 h-24 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform shrink-0 overflow-hidden"
                   style={{ backgroundColor: umkm.gambar ? 'transparent' : CAT_COLOR[umkm.category] }}
                 >
                   {umkm.gambar ? (
@@ -65,6 +84,9 @@ export default function UMKMList({ umkms, loading }: UMKMListProps) {
                       width={96}
                       height={96}
                       className="w-full h-full object-cover"
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiBmaWxsPSIjZTVlN2ViIi8+PC9zdmc+"
                       unoptimized
                     />
                   ) : (
@@ -79,7 +101,7 @@ export default function UMKMList({ umkms, loading }: UMKMListProps) {
                       {umkm.name}
                     </h3>
                     <span
-                      className="inline-block text-xs font-semibold text-white flex-shrink-0"
+                      className="inline-block text-xs font-semibold text-white shrink-0"
                       style={{ backgroundColor: CAT_COLOR[umkm.category], borderRadius: '4px', padding: '3px 8px' }}
                     >
                       {umkm.category}
@@ -88,11 +110,11 @@ export default function UMKMList({ umkms, loading }: UMKMListProps) {
                   
                   <div className="space-y-2">
                     <div className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <span className="material-icons text-sm text-emerald-500 mt-0.5 flex-shrink-0">location_on</span>
+                      <span className="material-icons text-sm text-emerald-500 mt-0.5 shrink-0">location_on</span>
                       <span className="flex-1">{umkm.address}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                      <span className="material-icons text-sm text-emerald-400 flex-shrink-0">schedule</span>
+                      <span className="material-icons text-sm text-emerald-400 shrink-0">schedule</span>
                       <span className="font-medium">{umkm.operatingHours}</span>
                     </div>
                   </div>
@@ -105,3 +127,5 @@ export default function UMKMList({ umkms, loading }: UMKMListProps) {
     </div>
   );
 }
+
+export default memo(UMKMList);

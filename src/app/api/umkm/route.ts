@@ -1,21 +1,53 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const pageParam = searchParams.get('page');
+    const limitParam = searchParams.get('limit');
+    const category = searchParams.get('category');
+    const search = searchParams.get('search');
+    
+    // Check if pagination is requested
+    const usePagination = pageParam !== null || limitParam !== null || category !== null || search !== null;
+    
+    const page = parseInt(pageParam || '1');
+    const limit = parseInt(limitParam || '50');
+    const from = (page - 1) * limit;
+    const to = from + limit - 1;
+
     // Query data UMKM dari Supabase
-    const { data, error } = await supabase
+    let query = supabase
       .from('umkm')
-      .select('*')
+      .select('*', { count: usePagination ? 'exact' : undefined })
       .order('id', { ascending: true });
+    
+    // Apply pagination if requested
+    if (usePagination) {
+      query = query.range(from, to);
+    }
+    
+    // Filter by category if provided
+    if (category && category !== 'Semua') {
+      query = query.eq('jenis', category);
+    }
+    
+    // Filter by search if provided
+    if (search) {
+      query = query.or(`nama_perusahaan.ilike.%${search}%,alamat.ilike.%${search}%`);
+    }
+
+    const { data, error, count } = await query;
 
     if (error) {
       console.error('Supabase error:', error);
-      return NextResponse.json([], { status: 200 });
+      // Return empty array for backward compatibility
+      return NextResponse.json(usePagination ? { data: [], pagination: { page, limit, total: 0, totalPages: 0 } } : [], { status: 200 });
     }
 
     if (!data) {
-      return NextResponse.json([]);
+      return NextResponse.json(usePagination ? { data: [], pagination: { page, limit, total: 0, totalPages: 0 } } : []);
     }
 
     // Transform data ke format yang sesuai dengan struktur aplikasi
@@ -53,9 +85,24 @@ export async function GET() {
       console.log('First item coords:', { lat: transformedData[0].lat, lng: transformedData[0].lng });
     }
 
-    return NextResponse.json(transformedData);
+    // Return array for backward compatibility if no pagination requested
+    if (!usePagination) {
+      return NextResponse.json(transformedData);
+    }
+
+    // Return object with pagination info if pagination requested
+    return NextResponse.json({
+      data: transformedData,
+      pagination: {
+        page,
+        limit,
+        total: count || 0,
+        totalPages: Math.ceil((count || 0) / limit)
+      }
+    });
   } catch (error) {
     console.error('API error:', error);
+    // Return empty array for backward compatibility
     return NextResponse.json([], { status: 200 });
   }
 }

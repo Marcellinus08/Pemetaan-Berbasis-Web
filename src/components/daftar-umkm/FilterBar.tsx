@@ -1,3 +1,5 @@
+import { useState, useEffect, memo } from 'react';
+
 interface FilterBarProps {
   searchQuery: string;
   setSearchQuery: (value: string) => void;
@@ -12,7 +14,7 @@ interface FilterBarProps {
   totalCount: number;
 }
 
-export default function FilterBar({
+function FilterBar({
   searchQuery,
   setSearchQuery,
   sortBy,
@@ -25,6 +27,22 @@ export default function FilterBar({
   filteredCount,
   totalCount
 }: FilterBarProps) {
+  const [localSearch, setLocalSearch] = useState(searchQuery);
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchQuery(localSearch);
+    }, 300); // Wait 300ms after user stops typing
+
+    return () => clearTimeout(timer);
+  }, [localSearch, setSearchQuery]);
+
+  // Sync with parent when searchQuery changes externally
+  useEffect(() => {
+    setLocalSearch(searchQuery);
+  }, [searchQuery]);
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 mb-8 border border-gray-200 dark:border-gray-700">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
@@ -36,8 +54,8 @@ export default function FilterBar({
           <input
             type="text"
             placeholder="Cari UMKM berdasarkan nama, deskripsi, atau lokasi..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            value={localSearch}
+            onChange={(e) => setLocalSearch(e.target.value)}
             className="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
           />
         </div>
@@ -113,3 +131,5 @@ export default function FilterBar({
     </div>
   );
 }
+
+export default memo(FilterBar);
