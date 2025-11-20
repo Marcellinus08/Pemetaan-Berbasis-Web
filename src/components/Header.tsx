@@ -12,10 +12,9 @@ export default function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Check localStorage, default to light mode
     const savedTheme = localStorage.getItem('theme') || 'light';
     const shouldBeDark = savedTheme === 'dark';
-    
+
     if (shouldBeDark) {
       document.documentElement.classList.add('dark');
       setIsDark(true);
@@ -23,11 +22,11 @@ export default function Header() {
       document.documentElement.classList.remove('dark');
       setIsDark(false);
     }
-    
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -35,7 +34,7 @@ export default function Header() {
   const toggleDark = () => {
     const root = document.documentElement;
     const newIsDark = !isDark;
-    
+
     if (newIsDark) {
       root.classList.add('dark');
       localStorage.setItem('theme', 'dark');
@@ -43,7 +42,7 @@ export default function Header() {
       root.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
-    
+
     setIsDark(newIsDark);
   };
 
@@ -57,36 +56,33 @@ export default function Header() {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 shadow-lg' 
-        : 'bg-transparent'
-    }`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 shadow-lg'
+          : 'bg-transparent'
+      }`}
+    >
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              {/* Glow effect */}
-              <div className="absolute -inset-2 bg-linear-to-r from-emerald-400 via-green-400 to-teal-400 rounded-full blur opacity-40 group-hover:opacity-70 transition duration-500"></div>
-              
-              {/* Logo container */}
-              <div className="relative w-12 h-12 transform group-hover:scale-110 transition-transform duration-300">
-                <Image 
-                  src="/logo_website.png" 
-                  alt="Logo UMKM"
-                  width={48}
-                  height={48}
-                  className="w-full h-full object-contain"
-                  priority
-                />
-              </div>
+          <Link href="/" className="flex items-start gap-3 group leading-none">
+            {/* Logo container: tinggi disamain sama total tinggi UMKM+TASIK */}
+            <div className="relative shrink-0 h-[46px] w-[46px] md:h-[50px] md:w-[50px] transform group-hover:scale-110 transition-transform duration-300">
+              <Image
+                src="/logo_website.png"
+                alt="Logo UMKM"
+                fill
+                sizes="50px"
+                className="object-contain"
+                priority
+              />
             </div>
-            
+
             {/* Teks UMKM / TASIKMALAYA */}
-            <div className="inline-flex flex-col items-stretch leading-none">
+            <div className="flex flex-col leading-none">
               {/* Baris UMKM */}
-              <div className="flex justify-between">
+              <div className="flex justify-between leading-none">
                 {'UMKM'.split('').map((ch, i) => (
                   <span
                     key={i}
@@ -98,11 +94,11 @@ export default function Header() {
               </div>
 
               {/* Baris TASIKMALAYA */}
-              <div className="mt-[2px] font-semibold flex justify-between">
+              <div className="mt-0.5 font-semibold flex justify-between leading-none">
                 {'TASIKMALAYA'.split('').map((ch, i) => (
                   <span
                     key={i}
-                    className="text-[11px] text-gray-600 dark:text-gray-400"
+                    className="text-[11px] leading-none text-gray-600 dark:text-gray-400"
                   >
                     {ch}
                   </span>
@@ -125,13 +121,19 @@ export default function Header() {
                       : 'text-gray-700 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400'
                   }`}
                 >
-                  <span className={`material-icons text-lg ${isActive ? '' : 'group-hover:scale-110'} transition-transform`}>
+                  <span
+                    className={`material-icons text-lg ${
+                      isActive ? '' : 'group-hover:scale-110'
+                    } transition-transform`}
+                  >
                     {item.icon}
                   </span>
                   <span>{item.name}</span>
-                  <span className={`absolute bottom-0 left-0 h-0.5 bg-linear-to-r from-emerald-500 to-green-500 transition-all duration-300 ${
-                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`}></span>
+                  <span
+                    className={`absolute bottom-0 left-0 h-0.5 bg-linear-to-r from-emerald-500 to-green-500 transition-all duration-300 ${
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  ></span>
                 </Link>
               );
             })}
@@ -168,11 +170,13 @@ export default function Header() {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`lg:hidden transition-all duration-300 ease-in-out ${
-        isMenuOpen 
-          ? 'max-h-screen opacity-100' 
-          : 'max-h-0 opacity-0 overflow-hidden'
-      }`}>
+      <div
+        className={`lg:hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen
+            ? 'max-h-screen opacity-100'
+            : 'max-h-0 opacity-0 overflow-hidden'
+        }`}
+      >
         <nav className="container mx-auto px-4 pb-4 space-y-2">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
@@ -192,7 +196,7 @@ export default function Header() {
               </Link>
             );
           })}
-          
+
           <button
             onClick={() => {
               toggleDark();
@@ -203,7 +207,9 @@ export default function Header() {
             <span className="material-icons">
               {isDark ? 'light_mode' : 'dark_mode'}
             </span>
-            <span className="font-medium">Mode {isDark ? 'Terang' : 'Gelap'}</span>
+            <span className="font-medium">
+              Mode {isDark ? 'Terang' : 'Gelap'}
+            </span>
           </button>
         </nav>
       </div>
