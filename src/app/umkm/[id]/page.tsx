@@ -200,16 +200,9 @@ export default function UMKMProfilePage() {
                       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                         {umkm.name}
                       </h1>
-                      <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-                        <div className="flex items-center gap-1">
-                          <span className="material-icons text-yellow-500 text-base">star</span>
-                          <span className="font-semibold">4.5</span>
-                          <span>(120 ulasan)</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <span className="material-icons text-emerald-500 text-base">location_on</span>
-                          <span>{umkm.district}</span>
-                        </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                        <span className="material-icons text-emerald-500 text-base">location_on</span>
+                        <span>{umkm.district}</span>
                       </div>
                     </div>
                     
@@ -231,19 +224,10 @@ export default function UMKMProfilePage() {
                   <div className="flex flex-wrap gap-3">
                     <a
                       href={`tel:${umkm.phone}`}
-                      className="flex items-center gap-2 px-6 py-3 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 transition-all shadow-lg hover:shadow-emerald-500/50"
+                      className="flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all shadow-lg hover:shadow-green-500/50"
                     >
                       <span className="material-icons">call</span>
                       <span className="font-semibold">Telepon</span>
-                    </a>
-                    <a
-                      href={`https://wa.me/62${umkm.phone.replace(/^0/, '')}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all shadow-lg hover:shadow-green-500/50"
-                    >
-                      <span className="material-icons">chat</span>
-                      <span className="font-semibold">WhatsApp</span>
                     </a>
                     <a
                       href={`https://www.google.com/maps/dir/?api=1&destination=${umkm.lat},${umkm.lng}`}
@@ -253,6 +237,15 @@ export default function UMKMProfilePage() {
                     >
                       <span className="material-icons">directions</span>
                       <span className="font-semibold">Petunjuk Arah</span>
+                    </a>
+                    <a
+                      href={`https://www.google.com/maps/dir/?api=1&destination=${umkm.lat},${umkm.lng}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-all shadow-lg hover:shadow-red-500/50"
+                    >
+                      <span className="material-icons">map</span>
+                      <span className="font-semibold">Lihat di GMaps</span>
                     </a>
                     <button className="flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
                       <span className="material-icons">share</span>
@@ -299,73 +292,12 @@ export default function UMKMProfilePage() {
                   </div>
                 </div>
               )}
-
-              {/* Reviews Section */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                  <span className="material-icons text-emerald-500">rate_review</span>
-                  Ulasan & Rating
-                </h2>
-                
-                {/* Rating Summary */}
-                <div className="flex items-center gap-8 mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
-                  <div className="text-center">
-                    <div className="text-5xl font-bold text-gray-900 dark:text-white mb-2">4.5</div>
-                    <div className="flex items-center gap-1 mb-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <span key={star} className="material-icons text-yellow-500">
-                          {star <= 4 ? 'star' : 'star_half'}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">120 ulasan</div>
-                  </div>
-                  
-                  <div className="flex-1 space-y-2">
-                    {[5, 4, 3, 2, 1].map((rating) => (
-                      <div key={rating} className="flex items-center gap-3">
-                        <span className="text-sm text-gray-600 dark:text-gray-400 w-8">{rating}★</span>
-                        <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-yellow-500"
-                            style={{ width: `${rating === 5 ? 70 : rating === 4 ? 20 : 10}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-600 dark:text-gray-400 w-12">{rating === 5 ? '84' : rating === 4 ? '24' : '12'}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Sample Reviews */}
-                <div className="space-y-6">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-full bg-linear-to-br from-emerald-500 to-green-600 flex items-center justify-center text-white font-bold">
-                      A
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="font-semibold text-gray-900 dark:text-white">Agus Santoso</span>
-                        <div className="flex items-center">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <span key={star} className="material-icons text-yellow-500 text-sm">star</span>
-                          ))}
-                        </div>
-                        <span className="text-sm text-gray-500">• 2 hari lalu</span>
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        Pelayanan sangat baik dan produknya berkualitas. Harga juga terjangkau. Recommended!
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Sidebar */}
-            <div className="lg:col-span-1 relative">
-              {/* Contact Info - Fixed Position */}
-              <div className="lg:fixed lg:top-32 lg:w-80 xl:w-96 bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 max-h-[calc(100vh-9rem)] overflow-y-auto">
+            <div className="lg:col-span-1">
+              {/* Contact Info - Sticky Position */}
+              <div className="lg:sticky lg:top-32 bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Informasi Kontak</h3>
                 
                 <div className="space-y-4">
