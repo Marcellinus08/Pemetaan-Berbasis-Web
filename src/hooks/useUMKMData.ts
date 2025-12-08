@@ -10,6 +10,7 @@ export interface UMKM {
   lat: number;
   lng: number;
   operatingHours: string;
+  tentang?: string | null;
 }
 
 export function useUMKMData() {

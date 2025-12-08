@@ -29,6 +29,7 @@ interface UMKM {
   lng: number;
   operatingHours: string;
   gambar?: string | null;
+  tentang?: string | null;
 }
 
 export default function UMKMProfilePage() {
@@ -261,8 +262,8 @@ export default function UMKMProfilePage() {
                   <span className="material-icons text-emerald-500">info</span>
                   Tentang
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {umkm.description}
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-wrap">
+                  {umkm.tentang || `${umkm.category} terbaik di ${umkm.district}`}
                 </p>
               </div>
 

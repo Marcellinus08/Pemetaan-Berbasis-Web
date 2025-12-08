@@ -4,10 +4,26 @@ import { supabase } from '@/lib/supabase';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
     const pageParam = searchParams.get('page');
     const limitParam = searchParams.get('limit');
     const category = searchParams.get('category');
     const search = searchParams.get('search');
+    
+    // If ID is provided, return single UMKM
+    if (id) {
+      const { data, error } = await supabase
+        .from('umkm')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error || !data) {
+        return NextResponse.json({ error: 'UMKM tidak ditemukan' }, { status: 404 });
+      }
+
+      return NextResponse.json(data);
+    }
     
     // Check if pagination is requested
     const usePagination = pageParam !== null || limitParam !== null || category !== null || search !== null;
@@ -75,7 +91,8 @@ export async function GET(request: Request) {
           lat,
           lng,
           operatingHours: umkm.waktu_buka || '',
-          gambar: umkm.gambar_url || null
+          gambar: umkm.gambar_url || null,
+          tentang: umkm.tentang || null
         };
       });
 

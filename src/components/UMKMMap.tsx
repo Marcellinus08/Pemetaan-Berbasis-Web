@@ -16,6 +16,7 @@ interface UMKM {
   lng: number;
   operatingHours: string;
   gambar?: string | null;
+  tentang?: string | null;
 }
 
 // Dynamically import Leaflet with no SSR
